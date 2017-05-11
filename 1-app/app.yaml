@@ -28,7 +28,7 @@ env_variables:
   PUBSUB_SUBSCRIPTION_NAME: test2db
   # This token is used to verify that requests originate from your
   # application. It can be any sufficiently random string.
-  PUBSUB_VERIFICATION_TOKEN: PLIRKOQ413FAAS4H2MX5WQ6O
+  PUBSUB_VERIFICATION_TOKEN: PLIRKOQD00linH2MX5WQ6O
 # [END env_variables]
 
 # [END app_yaml]

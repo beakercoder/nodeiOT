@@ -23,7 +23,7 @@ manual_scaling:
 
 # [START env_variables]
 env_variables:
-  GCLOUD_PROJECT: doolinhome
+  GCLOUD_PROJECT: doolinhomeiot
   PUBSUB_TOPIC: office-temp
   PUBSUB_SUBSCRIPTION_NAME: officetemp
   # This token is used to verify that requests originate from your

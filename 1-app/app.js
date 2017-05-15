@@ -66,9 +66,9 @@ function storeEvent(message) {
 
     // You can uncomment some of the other things if you want to store them in the database
     var obj = {
-		// gc_pub_sub_id: message.id,
-		// device_id: message.attributes.device_id,
-		// event: message.attributes.event,
+		gc_pub_sub_id: message.id,
+		device_id: message.attributes.device_id,
+		event: message.attributes.event,
 		published_at: message.attributes.published_at
 	}
 

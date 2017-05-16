@@ -14,7 +14,7 @@
 # [START app_yaml]
 runtime: nodejs
 # vm: true
-
+env: flex
 # This service needs very little CPU, so limit to one instance. If you're handling
 # a lot of events from a very large number of devices you may want to enable 
 # automatic scaling instead

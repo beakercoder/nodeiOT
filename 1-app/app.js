@@ -69,7 +69,8 @@ function storeEvent(message) {
 		gc_pub_sub_id: message.id,
 		device_id: message.attributes.device_id,
 		event: message.attributes.event,
-		published_at: message.attributes.published_at
+		published_at: message.attributes.published_at,
+	    	temperature: message.data
 	}
 
     // Copy the data in message.data, the Particle event data, as top-level 

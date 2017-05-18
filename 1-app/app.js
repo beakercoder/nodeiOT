@@ -75,11 +75,11 @@ function storeEvent(message) {
 
     // Copy the data in message.data, the Particle event data, as top-level 
     // elements in obj. This breaks the data out into separate columns.
-    for (var prop in message.data) {
-        if (message.data.hasOwnProperty(prop)) {
-            obj[prop] = message.data[prop];
-        }
-    }
+    //for (var prop in message.data) {
+     //   if (message.data.hasOwnProperty(prop)) {
+      //      obj[prop] = message.data[prop];
+       // }
+    //}
    
     datastore.save({
         key: key,

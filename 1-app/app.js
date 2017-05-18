@@ -68,7 +68,7 @@ function storeEvent(message) {
     var obj = {
 		gc_pub_sub_id: message.id,
 		device_id: message.attributes.device_id,
-		event: message.attributes.event,
+		//event: message.attributes.event,
 		published_at: message.attributes.published_at,
 	    	temperature: message.data
 	}

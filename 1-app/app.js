@@ -67,10 +67,10 @@ function storeEvent(message) {
     // You can uncomment some of the other things if you want to store them in the database
     var obj = {
 		messageid: message.id,
-		deviceid: message.attributes.device_id,
-		//event: message.attributes.event,
-		published: message.attributes.published_at,
-	    	data: message.data
+		//deviceid: message.attributes.device_id,
+		////event: message.attributes.event,
+		//published: message.attributes.published_at,
+	    	//data: message.data
 	}
 
     // Copy the data in message.data, the Particle event data, as top-level 

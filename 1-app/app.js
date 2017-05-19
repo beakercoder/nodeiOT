@@ -63,7 +63,7 @@ var subscription = pubsub.subscription(process.env.PUBSUB_SUBSCRIPTION_NAME);
 // https://github.com/spark/google-cloud-datastore-tutorial/blob/master/tutorial.js
 function storeEvent(message) {
     var key = datastore.key('officedata');
-
+	key.identifier = "id"
     // You can uncomment some of the other things if you want to store them in the database
     var obj = {
 		messageid: message.id,

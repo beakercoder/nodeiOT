@@ -1,0 +1,74 @@
+// This #include statement was automatically added by the Particle IDE.
+#include "Adafruit_DHT/Adafruit_DHT.h"
+
+
+#define DHTPIN D3 // wh2t pin we’re connected to
+
+
+#define DHTTYPE DHT11 // DHT 11
+
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() 
+{
+   //Prints out the local IP over Serial.
+  //String ip = WiFi.localIP();
+  //Particle.publish("IP=", String(ip));
+    float q = 16;
+     //Particle.publish("bath", String(q));
+    Serial.begin(9600);
+       //Prints out the local IP over Serial.
+
+    dht.begin();
+
+  //while(!Serial.available()) Particle.process();
+    
+
+}
+void loop() {
+// Wait a few seconds between measurements.
+
+delay(2000);
+
+
+float h = dht.getHumidity();
+// Read temperature as Celsius
+//float t = dht.getTempCelcius();
+// Read temperature as Farenheit
+float f = dht.getTempFarenheit();
+
+// Check if any reads failed and exit early (to try again).
+//if (isnan(h) || isnan(t) || isnan(f)) {
+
+//Serial.println("Failed to read from DHT sensor!");
+//return;
+//}
+
+// Compute heat index
+// Must send in temp in Fahrenheit!
+//float hi = dht.getHeatIndex();
+//float dp = dht.getDewPoint();
+//float k = dht.getTempKelvin();
+//float datagrab;
+//office
+//const char *PUBLISH_THINGSPEAK_Temp = "OfficeTemp";
+//const char *PUBLISH_THINGSPEAK_Hum = "officehum";
+//library
+//const char *PUBLISH_THINGSPEAK_Temp = "LibraryTemp";
+//const char *PUBLISH_THINGSPEAK_Hum = "LibraryHum";
+//MasterBed
+//const char *PUBLISH_THINGSPEAK_Temp = "MasterBedTemp";
+//const char *PUBLISH_THINGSPEAK_Hum = "MasterBedHum";
+//MyBath
+const char *PUBLISH_THINGSPEAK_Temp = "MyBathTemp";
+const char *PUBLISH_THINGSPEAK_Hum = "MyBathHum";
+//String(datagrab) = String(f) + "," + String(h) + "," + String(dp) + "," + String(hi);
+
+Particle.publish(PUBLISH_THINGSPEAK_Temp, String(f), PRIVATE);
+Particle.publish(PUBLISH_THINGSPEAK_Hum, String(h), PRIVATE);
+
+delay(6000);
+//delay(600000);
+//delay(3600000);
+}

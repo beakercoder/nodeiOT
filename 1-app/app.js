@@ -35,6 +35,13 @@ app.enable('trust proxy');
 // https://googlecloudplatform.github.io/gcloud-node/#/docs/google-cloud/latest/guides/authentication
 // These environment variables are set automatically on Google App Engine
 var Datastore = require('@google-cloud/datastore');
+const BigQuery = require('@google-cloud/bigquery');
+const projectId = "doolinhomeiot";
+const datasetId = "OfficeData";
+const tableId = "my_table";
+const bigquery = BigQuery({
+  projectId: projectId
+});
 
 // Instantiate a datastore client
 var datastore = Datastore();
@@ -91,6 +98,25 @@ function storeEvent(message) {
 		console.log('stored in datastore', obj);
     });
 
+	
+	bigquery
+  		.dataset(datasetId)
+  		.table(tableId)
+  		.insert(rows)
+  		.then((insertErrors) => {
+    			console.log('Inserted:');
+    		rows.forEach((row) => console.log(row));
+
+    		if (insertErrors && insertErrors.length > 0) {
+      			console.log('Insert errors:');
+      		insertErrors.forEach((err) => console.error(err));
+    }
+  })
+  .catch((err) => {
+    console.error('ERROR:', err);
+  });
+	
+	
 };
 
 subscription.on('message', function(message) {

@@ -38,7 +38,7 @@ var Datastore = require('@google-cloud/datastore');
 const BigQuery = require('@google-cloud/bigquery');
 const projectId = "doolinhomeiot";
 const datasetId = "OfficeData";
-const tableId = "my_table";
+const tableId = "";
 const bigquery = BigQuery({
   projectId: projectId
 });
@@ -99,17 +99,26 @@ function storeEvent(message) {
     });
 
 	
-	bigquery
-  		.dataset(datasetId)
-  		.table(tableId)
-  		.insert(rows)
-  		.then((insertErrors) => {
-    			console.log('Inserted:');
-    		rows.forEach((row) => console.log(row));
-
-    		if (insertErrors && insertErrors.length > 0) {
-      			console.log('Insert errors:');
-      		insertErrors.forEach((err) => console.error(err));
+bigquery.tabledata.insertAll({
+  auth: oauth2Client,
+  'projectId': projectId,
+  'datasetId': datasetId,
+  'tableId': tableId,
+  'resource ': {
+    "kind": "bigquery#tableDataInsertAllRequest",
+    "rows": [
+      {
+        "insertId": 123456,
+        "json": '{"id": 123,"name":"test1"}'
+      }
+    ]
+  }
+}, function(err, result) {
+  if (err) {
+    return console.error(err);
+  }
+  console.log(result);
+});
     }
   })
   .catch((err) => {

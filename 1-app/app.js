@@ -4,8 +4,14 @@
 
 // [START setup]
 
-var express = require('express');
 
+//const BigQuery = require('@google-cloud/bigquery');
+const projectId = "doolinhomeiot";
+const datasetId = "OfficeData";
+const tableId = "iotdata";
+var request = "{auth: oath2Client,'projectId': " +  projectId + ", 'datasetId': " +  datasetId + ", 'tableId': " + tableId + ", 'resource': {'kind': 'bigquery#tableDataInsertAllRequest','rows':[{'insertId': 123456, 'json': '{'nameid': '123','messagedata':'test1'}'}]}}";
+console.log(request);
+var express = require('express');
 var app = express();
 var google = require('googleapis');
 var bigquery = google.bigquery('v2');
@@ -13,11 +19,6 @@ var bigquery = google.bigquery('v2');
 app.enable('trust proxy');
 
 var Datastore = require('@google-cloud/datastore');
-//const BigQuery = require('@google-cloud/bigquery');
-const projectId = "doolinhomeiot";
-const datasetId = "OfficeData";
-const tableId = "iotdata";
-
 // Instantiate a datastore client
 var datastore = Datastore();
 

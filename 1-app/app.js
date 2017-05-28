@@ -35,7 +35,10 @@ var PUBSUB_VERIFICATION_TOKEN = process.env.PUBSUB_VERIFICATION_TOKEN;
 var topic = pubsub.topic(process.env.PUBSUB_TOPIC);
 
 var subscription = pubsub.subscription(process.env.PUBSUB_SUBSCRIPTION_NAME);
-
+// Instantiates a client
+const bigquery = BigQuery({
+  projectId: projectId
+});
 // [END setup]
 
 function storeEvent(message) 

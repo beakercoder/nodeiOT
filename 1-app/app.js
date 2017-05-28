@@ -4,14 +4,8 @@
 
 // [START setup]
 
-
-//const BigQuery = require('@google-cloud/bigquery');
-const projectId = "doolinhomeiot";
-const datasetId = "OfficeData";
-const tableId = "iotdata";
-var request = "{auth: oath2Client,'projectId': " +  projectId + ", 'datasetId': " +  datasetId + ", 'tableId': " + tableId + ", 'resource': {'kind': 'bigquery#tableDataInsertAllRequest','rows':[{'insertId': 123456, 'json': '{'nameid': '123','messagedata':'test1'}'}]}}";
-console.log(request);
 var express = require('express');
+
 var app = express();
 var google = require('googleapis');
 var bigquery = google.bigquery('v2');
@@ -19,6 +13,11 @@ var bigquery = google.bigquery('v2');
 app.enable('trust proxy');
 
 var Datastore = require('@google-cloud/datastore');
+//const BigQuery = require('@google-cloud/bigquery');
+const projectId = "doolinhomeiot";
+const datasetId = "OfficeData";
+const tableId = "iotdata";
+
 // Instantiate a datastore client
 var datastore = Datastore();
 
@@ -42,8 +41,8 @@ google.auth.getApplicationDefault(function(err, authClient) {
     if (authClient.createScopedRequired && authClient.createScopedRequired()) {
         var scopes = ['https://www.googleapis.com/auth/cloud-platform'];
         authClient = authClient.createScoped(scopes);
-    }
-    })
+    }});
+
 //'insertId': 123456, 'json': '{"nameid": 123,"messagedata":"test1"
 
 //var request = {projectId: projectId,datasetId: datasetId,tableID: tableId,resource: {"kind": "bigquery#tableDataInsertAllRequest","rows":
@@ -74,8 +73,8 @@ google.auth.getApplicationDefault(function(err, authClient) {
                 console.log('stored in datastore', obj);
             }
         );
-        var response = "response";
-        var request = "{auth: oath2Client,'projectId': projectId, 'datasetId': datasetId, 'tableId': tableId, 'resource': {'kind': 'bigquery#tableDataInsertAllRequest','rows':[{'insertId': 123456, 'json': '{'nameid': '123','messagedata':'test1'}'}]}}";
+        //var response = "response";
+        var request = "{auth: oath2Client,'projectId':" +  projectId + ", 'datasetId':" +  datasetId + ", 'tableId':" +  tableId + ", 'resource': {'kind': 'bigquery#tableDataInsertAllRequest','rows':[{'insertId': 123456, 'json': '{'nameid': '123','messagedata':'test1'}'}]}}";
         //save to BigQuery Tables
         debug.log(request);
         bigquery.tabledata.insertAll(request, function(err, result) {

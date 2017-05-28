@@ -7,18 +7,19 @@
 var express = require('express');
 
 var app = express();
-
+var google = require('googleapis');
+var bigquery = google.bigquery('v2');
 
 app.enable('trust proxy');
 
 var Datastore = require('@google-cloud/datastore');
-const BigQuery = require('@google-cloud/bigquery');
+//const BigQuery = require('@google-cloud/bigquery');
 const projectId = "doolinhomeiot";
 const datasetId = "OfficeData";
 const tableId = "iotdata";
-const bigquery = BigQuery({
-  projectId: projectId
-});
+//const bigquery = BigQuery({
+//  projectId: projectId
+//});
 
 // Instantiate a datastore client
 var datastore = Datastore();
@@ -36,7 +37,16 @@ var topic = pubsub.topic(process.env.PUBSUB_TOPIC);
 
 var subscription = pubsub.subscription(process.env.PUBSUB_SUBSCRIPTION_NAME);
 // Instantiates a client
-
+  var request = {projectId,datasetId,tableId,resource: {"kind": "bigquery#tableDataInsertAllRequest","rows": 
+    [
+      {
+        'insertId': 123456,
+        'json': '{'nameid': 123,'messagedata':'test1'}'
+      }
+    ]},
+    // Auth client
+    auth: authClient
+  };
 // [END setup]
 
 function storeEvent(message) 
@@ -65,20 +75,7 @@ function storeEvent(message)
 		console.log('stored in datastore', obj);
     }
     );
-bigquery.tabledata.insertAll({
-  auth: oauth2Client,
-  'projectId': projectId,
-  'datasetId': datasetId,
-  'tableId': tableId,
-  'resource ':{"kind": "bigquery#tableDataInsertAllRequest","rows": 
-    [
-      {
-        'insertId': 123456,
-        'json': '{'nameid': 123,'messagedata':'test1'}'
-      }
-    ]
-  }
-}, function(err, result) 
+bigquery.tabledata.insertAll(request, function(err, result) 
     {
     if (err) 
     {

@@ -70,11 +70,11 @@ bigquery.tabledata.insertAll({
   'projectId': projectId,
   'datasetId': datasetId,
   'tableId': tableId,
-  'resource ': {"kind": "bigquery#tableDataInsertAllRequest","rows": 
+  'resource ':{"kind": "bigquery#tableDataInsertAllRequest","rows": 
     [
       {
-        "insertId": 123456,
-        "json": '{"nameid": 123,"messagedata":"test1"}'
+        'insertId': 123456,
+        'json': '{'nameid': 123,'messagedata':'test1'}'
       }
     ]
   }

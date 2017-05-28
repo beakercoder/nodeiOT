@@ -36,7 +36,7 @@ var topic = pubsub.topic(process.env.PUBSUB_TOPIC);
 
 var subscription = pubsub.subscription(process.env.PUBSUB_SUBSCRIPTION_NAME);
 // Instantiates a client
-const bigquery = BigQuery({
+const bigquerystore = BigQuery({
   projectId: projectId
 });
 // [END setup]
@@ -67,7 +67,7 @@ function storeEvent(message)
 		console.log('stored in datastore', obj);
     }
     );
-bigquery.tabledata.insertAll
+bigquerystore.tabledata.insertAll
 (
 {
   auth: oauth2Client,

@@ -74,7 +74,7 @@ bigquery.tabledata.insertAll({
     [
       {
         "insertId": 123456,
-        "json": '{"id": 123,"name":"test1"}'
+        "json": '{"nameid": 123,"messagedata":"test1"}'
       }
     ]
   }

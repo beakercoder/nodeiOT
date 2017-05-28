@@ -75,6 +75,7 @@ google.auth.getApplicationDefault(function(err, authClient) {
         );
         //var response = "response";
         var request = "{auth: oath2Client,'projectId':" + projectId + ", 'datasetId':" + datasetId + ", 'tableId':" + tableId + ", 'resource': {'kind': 'bigquery#tableDataInsertAllRequest','rows':[{'insertId': 123456, 'json': '{'nameid': '123','messagedata':'test1'}'}]}}";
+        console.log('requeststring', request);
         //save to BigQuery Tables
         //debug.log(request);
         bigquery.tabledata.insertAll(request, function (err, result) {

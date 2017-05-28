@@ -76,7 +76,7 @@ function storeEvent(message)
         }
     );
     //save to BigQuery Tables
-    bigquery.tabledata.insertAll({auth: oath2Client,'projectId': projectId, 'datasetId': datasetId, 'tableId': tableId, 'resource': {"kind": "bigquery#tableDataInsertAllRequest","rows":[{"insertId": 123456, "json": {"nameid": "123","messagedata":"test1"}}]}, func);
+    bigquery.tabledata.insertAll({auth: oath2Client,'projectId': projectId, 'datasetId': datasetId, 'tableId': tableId, 'resource': {"kind": "bigquery#tableDataInsertAllRequest","rows":[{"insertId": 123456, "json": {"nameid": "123","messagedata":"test1"}}]});
     
         //err: result});
 

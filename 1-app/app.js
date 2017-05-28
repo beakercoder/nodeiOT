@@ -15,7 +15,7 @@ var Datastore = require('@google-cloud/datastore');
 const BigQuery = require('@google-cloud/bigquery');
 const projectId = "doolinhomeiot";
 const datasetId = "OfficeData";
-const tableId = "";
+const tableId = "iotdata";
 const bigquery = BigQuery({
   projectId: projectId
 });
@@ -93,13 +93,6 @@ bigquery.tabledata.insertAll
 );
 
 }
-  .catch((err) => 
-  {
-    console.error('ERROR:', err);
-  };
-	
-	
-
 
 subscription.on('message', function(message) {
 	console.log('event received', message);

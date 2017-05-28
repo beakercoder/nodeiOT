@@ -65,17 +65,12 @@ function storeEvent(message)
 		console.log('stored in datastore', obj);
     }
     );
-bigquery.tabledata.insertAll
-(
-{
+bigquery.tabledata.insertAll({
   auth: oauth2Client,
   'projectId': projectId,
   'datasetId': datasetId,
   'tableId': tableId,
-  'resource ': 
-  {
-    "kind": "bigquery#tableDataInsertAllRequest",
-    "rows": 
+  'resource ': {"kind": "bigquery#tableDataInsertAllRequest","rows": 
     [
       {
         "insertId": 123456,

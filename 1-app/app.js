@@ -8,7 +8,7 @@ var express = require('express');
 
 var app = express();
 var google = require('googleapis');
-var bigquery = google.bigquery('v2');
+var BigQuery = google.bigquery('v2');
 
 app.enable('trust proxy');
 
@@ -17,7 +17,9 @@ var Datastore = require('@google-cloud/datastore');
 const projectId = "doolinhomeiot";
 const datasetId = "OfficeData";
 const tableId = "iotdata";
-
+const bigquery = BigQuery({
+  projectId: projectId
+});
 // Instantiate a datastore client
 var datastore = Datastore();
 

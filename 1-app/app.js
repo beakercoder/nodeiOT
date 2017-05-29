@@ -74,7 +74,7 @@ google.auth.getApplicationDefault(function(err, authClient) {
             }
         );
         //var response = "response";
-        var request = "{auth: authClient,'projectId':" + projectId + ", 'datasetId':" + datasetId + ", 'tableId':" + tableId + ", 'resource': {'kind': 'bigquery#tableDataInsertAllRequest','rows':[{'insertId': 123456, 'json': '{'nameid': '123','messagedata':'test1'}'}]}}";
+        //var request = "{auth: authClient,'projectId':" + projectId + ", 'datasetId':" + datasetId + ", 'tableId':" + tableId + ", 'resource': {'kind': 'bigquery#tableDataInsertAllRequest','rows':[{'insertId': 123456, 'json': '{'nameid': '123','messagedata':'test1'}'}]}}";
         //save to BigQuery Tables
         //debug.log(request);
         ////bigquery.tabledata.insertAll(request, function (err, result) {
@@ -85,7 +85,7 @@ google.auth.getApplicationDefault(function(err, authClient) {
          ////   }
         ////});
 
-        bigquery.tabledata.insertAll({auth: authClient,
+        bigquery.tabledata.insertAll({'auth': authClient,
             'projectId': projectId,
             'datasetId': datasetId,
             'tableId': tableId,

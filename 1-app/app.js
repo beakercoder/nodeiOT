@@ -93,23 +93,11 @@ function storeEvent(message) {
     const bigquery = BigQuery({
         projectId: projectId
     });
-    bigquery
-        .dataset(datasetId)
-        .table(tableId)
-        .insert(rows)
-        .then((insertErrors) => {
-        console.log('Inserted:');
-        rows.forEach((row) => console.log(row));
+    bigquery.dataset(datasetId);
+    bigquery.table(tableId);
+    bigquery.insertrow(rows);
 
-        if (insertErrors && insertErrors.length > 0){
-            console.log('Insert Errors:');
-            insertErrors.forEach((err) => console.error((err)));
-        }
-        })
-        .catch((err)) => {
 
-        console.error('ERROR:', err);a
-    };
 
 }
     ////bigquery.tables.insert({

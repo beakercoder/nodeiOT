@@ -8,7 +8,7 @@ var express = require('express');
 
 var app = express();
 var google = require('googleapis');
-//var BigQuery = google.bigquery('v2');
+//var bigquery = google.bigquery('v2');
 
 app.enable('trust proxy');
 
@@ -17,9 +17,7 @@ const BigQuery = require('@google-cloud/bigquery');
 const projectId = "doolinhomeiot";
 const datasetId = "OfficeData";
 const tableId = "iotdata";
-const bigquery = BigQuery({
-  projectId: projectId
-});
+
 // Instantiate a datastore client
 var datastore = Datastore();
 
@@ -52,73 +50,100 @@ var subscription = pubsub.subscription(process.env.PUBSUB_SUBSCRIPTION_NAME);
 
 // [END setup]
 
-    function storeEvent(message) {
-        var key = datastore.key('officedata');
-        key.identifier = "id"
-        // You can uncomment some of the other things if you want to store them in the database
+function storeEvent(message) {
+    var key = datastore.key('officedata');
+    key.identifier = "id"
+    // You can uncomment some of the other things if you want to store them in the database
 
-        var obj = {
-            messageid: message.id
-            //deviceid: message.attributes.device_id,
-            ////event: message.attributes.event,
-            //published: message.attributes.published_at,
-            //data: message.data
-        }
-        datastore.save(
-            {
-                key: key,
-                data: obj
-            }, function (err) {
-                if (err) {
-                    console.log('There was an error storing the event', err);
-                }
-                console.log('stored in datastore', obj);
-            }
-        );
-        //var response = "response";
-        //var request = "{auth: authClient,'projectId':" + projectId + ", 'datasetId':" + datasetId + ", 'tableId':" + tableId + ", 'resource': {'kind': 'bigquery#tableDataInsertAllRequest','rows':[{'insertId': 123456, 'json': '{'nameid': '123','messagedata':'test1'}'}]}}";
-        //save to BigQuery Tables
-        //debug.log(request);
-        ////bigquery.tabledata.insertAll(request, function (err, result) {
-         ////   if (err) {
-         ////       console.log(err);
-         ////   } else {
-         ////       console.log(result);
-         ////   }
-        ////});
-
-        bigquery.tables.insert({
-            'projectId': projectId,
-            'datasetId': datasetId,
-            'tableId': tableId,
-            'resource': {'kind': 'bigquery#tableDataInsertAllRequest','rows':[{'insertId': 123456, 'json': '{"nameid": "123"","messagedata":"test1"}'}]}, function (err, result) {
+    var obj = {
+        messageid: message.id
+        //deviceid: message.attributes.device_id,
+        ////event: message.attributes.event,
+        //published: message.attributes.published_at,
+        //data: message.data
+    }
+    datastore.save(
+        {
+            key: key,
+            data: obj
+        }, function (err) {
             if (err) {
-                console.log(err);
-            } else {
-                console.log(result);
+                console.log('There was an error storing the event', err);
             }
-        }})};
-    //});
+            console.log('stored in datastore', obj);
+        }
+    );
+    //var response = "response";
+    //var request = "{auth: authClient,'projectId':" + projectId + ", 'datasetId':" + datasetId + ", 'tableId':" + tableId + ", 'resource': {'kind': 'bigquery#tableDataInsertAllRequest','rows':[{'insertId': 123456, 'json': '{'nameid': '123','messagedata':'test1'}'}]}}";
+    //save to BigQuery Tables
+    //debug.log(request);
+    ////bigquery.tabledata.insertAll(request, function (err, result) {
+    ////   if (err) {
+    ////       console.log(err);
+    ////   } else {
+    ////       console.log(result);
+    ////   }
+    ////});
+    var content = "{'nameid': '123','messagedata': 'test1'}";
+    let rows = null;
+    try {
+        rows = JSON.parse(content)
+    } catch (err) {
+    }
+    const bigquery = BigQuery({
+        projectId: projectId
+    });
+    bigquery
+        .dataset(datasetId)
+        .table(tableId)
+        .insert(rows)
+        .then((insertErrors) => {
+        console.log('Inserted:');
+        rows.forEach((row) => console.log(row));
 
-        //err: result});
+        if (insertErrors && insertErrors.length > 0){
+            console.log('Insert Errors:');
+            insertErrors.forEach((err) => console.error((err)));
+        }
+        })
+        .catch((err)) => {
+
+        console.error('ERROR:', err);a
+    };
+
+}
+    ////bigquery.tables.insert({
+    ////    'projectId': projectId,
+    ////    'datasetId': datasetId,
+    ////    'tableId': tableId,
+    ////    'resource': {'kind': 'bigquery#tableDataInsertAllRequest','rows':[{'insertId': 123456, 'json': '{"nameid": "123"","messagedata":"test1"}'}]}, function (err, result) {
+    ////        if (err) {
+     ////           console.log(err);
+     ////       } else {
+     ////           console.log(result);
+      ////      }
+      ////  }})};
+//});
+
+//err: result});
 
 
-        subscription.on('message', function (message) {
-            console.log('event received', message);
-            // Called every time a message is received.
-            // message.id = ID used to acknowledge its receival.
-            // message.data = Contents of the message.
-            // message.attributes = Attributes of the message.
-            storeEvent(message);
-            message.ack();
-        });
+subscription.on('message', function (message) {
+    console.log('event received', message);
+    // Called every time a message is received.
+    // message.id = ID used to acknowledge its receival.
+    // message.data = Contents of the message.
+    // message.attributes = Attributes of the message.
+    storeEvent(message);
+    message.ack();
+});
 
 // [START listen]
-        var server = app.listen(process.env.PORT || 8080, function () {
-            console.log('App listening on port %s', server.address().port);
-            console.log('Press Ctrl+C to quit.');
-        });
+var server = app.listen(process.env.PORT || 8080, function () {
+    console.log('App listening on port %s', server.address().port);
+    console.log('Press Ctrl+C to quit.');
+});
 // [END listen]
 // [END app]
 
-        module.exports = app;
+module.exports = app;

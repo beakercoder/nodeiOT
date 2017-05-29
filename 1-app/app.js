@@ -33,15 +33,15 @@ var PUBSUB_VERIFICATION_TOKEN = process.env.PUBSUB_VERIFICATION_TOKEN;
 var topic = pubsub.topic(process.env.PUBSUB_TOPIC);
 
 var subscription = pubsub.subscription(process.env.PUBSUB_SUBSCRIPTION_NAME);
-google.auth.getApplicationDefault(function(err, authClient) {
-    if (err) {
-        console.log('Authentication failed because of ', err);
-        return;
-    }
-    if (authClient.createScopedRequired && authClient.createScopedRequired()) {
-        var scopes = ['https://www.googleapis.com/auth/cloud-platform'];
-        authClient = authClient.createScoped(scopes);
-    }});
+////google.auth.getApplicationDefault(function(err, authClient) {
+////    if (err) {
+////        console.log('Authentication failed because of ', err);
+////        return;
+////    }
+////    if (authClient.createScopedRequired && authClient.createScopedRequired()) {
+////        var scopes = ['https://www.googleapis.com/auth/cloud-platform'];
+////        authClient = authClient.createScoped(scopes);
+////    }});
 
 //'insertId': 123456, 'json': '{"nameid": 123,"messagedata":"test1"
 
@@ -85,7 +85,7 @@ google.auth.getApplicationDefault(function(err, authClient) {
          ////   }
         ////});
 
-        bigquery.tabledata.insertAll({'auth': authClient,
+        bigquery.tabledata.insert({
             'projectId': projectId,
             'datasetId': datasetId,
             'tableId': tableId,

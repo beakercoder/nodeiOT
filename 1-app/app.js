@@ -85,7 +85,7 @@ var subscription = pubsub.subscription(process.env.PUBSUB_SUBSCRIPTION_NAME);
          ////   }
         ////});
 
-        bigquery.tabledata.insert({
+        bigquery.tables.insert({
             'projectId': projectId,
             'datasetId': datasetId,
             'tableId': tableId,

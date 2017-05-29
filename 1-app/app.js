@@ -8,12 +8,12 @@ var express = require('express');
 
 var app = express();
 var google = require('googleapis');
-var BigQuery = google.bigquery('v2');
+//var BigQuery = google.bigquery('v2');
 
 app.enable('trust proxy');
 
 var Datastore = require('@google-cloud/datastore');
-//const BigQuery = require('@google-cloud/bigquery');
+const BigQuery = require('@google-cloud/bigquery');
 const projectId = "doolinhomeiot";
 const datasetId = "OfficeData";
 const tableId = "iotdata";

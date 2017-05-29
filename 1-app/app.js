@@ -74,18 +74,29 @@ google.auth.getApplicationDefault(function(err, authClient) {
             }
         );
         //var response = "response";
-        var request = "{auth: oath2Client,projectId:'" + projectId + "', datasetId:'" + datasetId + "', tableId:'" + tableId + "', resource: {'kind': 'bigquery#tableDataInsertAllRequest','rows':[{'insertId': 123456, 'json': '{'nameid': '123','messagedata':'test1'}'}]}}";
-        console.log('requeststring', request);
+        var request = "{auth: oath2Client,'projectId':" + projectId + ", 'datasetId':" + datasetId + ", 'tableId':" + tableId + ", 'resource': {'kind': 'bigquery#tableDataInsertAllRequest','rows':[{'insertId': 123456, 'json': '{'nameid': '123','messagedata':'test1'}'}]}}";
         //save to BigQuery Tables
         //debug.log(request);
-        bigquery.tabledata.insertAll(request, function (err, result) {
+        ////bigquery.tabledata.insertAll(request, function (err, result) {
+         ////   if (err) {
+         ////       console.log(err);
+         ////   } else {
+         ////       console.log(result);
+         ////   }
+        ////});
+
+        bigquery.tabledata.insertAll({auth: oath2Client,
+            'projectId': projectId,
+            'datasetId': datasetId,
+            'tableId': tableId,
+            'resource': {'kind': 'bigquery#tableDataInsertAllRequest','rows':[{'insertId': 123456, 'json': '{"nameid": "123"","messagedata":"test1"}'}]}, function (err, result) {
             if (err) {
                 console.log(err);
             } else {
                 console.log(result);
             }
-        });
-    };
+        }})};
+    //});
 
         //err: result});
 
@@ -109,4 +120,3 @@ google.auth.getApplicationDefault(function(err, authClient) {
 // [END app]
 
         module.exports = app;
-    

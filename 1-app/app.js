@@ -94,7 +94,7 @@ function storeEvent(message) {
         projectId: projectId
     });
     bigquery.dataset(datasetId);
-    bigquery.table(tableId);
+    bigquery.tables(tableId);
     bigquery.insertrow(rows);
 
 

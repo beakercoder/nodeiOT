@@ -84,7 +84,7 @@ function storeEvent(message) {
     ////       console.log(result);
     ////   }
     ////});
-    var content = "{'nameid': '123','messagedata': 'test1'}";
+    var content = "{'nameid': '789','messagedata': 'test1k'}";
     let rows = null;
     try {
         rows = JSON.parse(content)
@@ -93,9 +93,10 @@ function storeEvent(message) {
     const bigquery = BigQuery({
         projectId: projectId
     });
-    bigquery.dataset(datasetId);
-    bigquery.tables(tableId);
-    bigquery.insertrow(rows);
+    bigquery
+        .dataset(datasetId);
+        .table(tableId);
+        .insertrow(rows);
 
 
 

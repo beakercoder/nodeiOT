@@ -60,11 +60,11 @@ function storeEvent(message) {
     );
 
 
-    var content = "{'nameid': '789','messagedata': 'test1k'}";
+    var content = {"nameid": "789", "messagedata": "test1k"};
     let rows = null;
     try {
         rows = JSON.parse(content)
-        console.log(JSON);
+        //console.log('JSON=' + JSON);
     } catch (err) {
     }
 insertRowsAsStream(datasetId,tableId,rows,projectId)

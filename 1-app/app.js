@@ -57,8 +57,9 @@ function storeEvent(message) {
             }
             console.log('stored in datastore', obj);
             console.log('Begin BIGQUERY:');
+            var messagedata = message.data;
             //var content = {"nameid": "1658", "messagedata": " message.data "};
-        insertRowsAsStream(datasetId,tableId,projectId,message.data, message.attributes.published_at, message.attributes.device_id)
+        insertRowsAsStream(datasetId,tableId,projectId,messagedata , message.attributes.published_at, message.attributes.device_id)
         }
     );
 

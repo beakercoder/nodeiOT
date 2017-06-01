@@ -42,10 +42,10 @@ function storeEvent(message) {
 
     var obj = {
         messageid: message.id
-        //deviceid: message.attributes.device_id,
+        deviceid: message.attributes.device_id,
         ////event: message.attributes.event,
-        //published: message.attributes.published_at,
-        //data: message.data
+        published: message.attributes.published_at,
+        data: message.data
     }
     datastore.save(
         {
@@ -57,7 +57,7 @@ function storeEvent(message) {
             }
             console.log('stored in datastore', obj);
             console.log('Begin BIGQUERY:');
-            var content = {"nameid": "789", "messagedata": "test1k"};
+            var content = {"nameid": "1658", "messagedata": " message.data "};
             //console.log('content:' + content);
             //let rows = null;
             //try {

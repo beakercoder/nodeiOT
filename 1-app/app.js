@@ -13,7 +13,7 @@ var google = require('googleapis');
 app.enable('trust proxy');
 
 var Datastore = require('@google-cloud/datastore');
-const BigQuery = require('@google-cloud/bigquery');
+//const BigQuery = require('@google-cloud/bigquery');
 const projectId = "doolinhomeiot";
 const datasetId = "OfficeData";
 const tableId = "iotdata";
@@ -26,27 +26,12 @@ var PubSub = require('@google-cloud/pubsub');
 //Instantiate a pubsub client
 var pubsub = PubSub();
 
-//The following environment variables are set by app.yaml when running on GAE,
-//but will need to be manually set when running locally.
+
 var PUBSUB_VERIFICATION_TOKEN = process.env.PUBSUB_VERIFICATION_TOKEN;
 
 var topic = pubsub.topic(process.env.PUBSUB_TOPIC);
 
 var subscription = pubsub.subscription(process.env.PUBSUB_SUBSCRIPTION_NAME);
-////google.auth.getApplicationDefault(function(err, authClient) {
-////    if (err) {
-////        console.log('Authentication failed because of ', err);
-////        return;
-////    }
-////    if (authClient.createScopedRequired && authClient.createScopedRequired()) {
-////        var scopes = ['https://www.googleapis.com/auth/cloud-platform'];
-////        authClient = authClient.createScoped(scopes);
-////    }});
-
-//'insertId': 123456, 'json': '{"nameid": 123,"messagedata":"test1"
-
-//var request = {projectId: projectId,datasetId: datasetId,tableID: tableId,resource: {"kind": "bigquery#tableDataInsertAllRequest","rows":
-//    {}, auth: authClient]};
 
 // [END setup]
 
@@ -73,49 +58,48 @@ function storeEvent(message) {
             console.log('stored in datastore', obj);
         }
     );
-    //var response = "response";
-    //var request = "{auth: authClient,'projectId':" + projectId + ", 'datasetId':" + datasetId + ", 'tableId':" + tableId + ", 'resource': {'kind': 'bigquery#tableDataInsertAllRequest','rows':[{'insertId': 123456, 'json': '{'nameid': '123','messagedata':'test1'}'}]}}";
-    //save to BigQuery Tables
-    //debug.log(request);
-    ////bigquery.tabledata.insertAll(request, function (err, result) {
-    ////   if (err) {
-    ////       console.log(err);
-    ////   } else {
-    ////       console.log(result);
-    ////   }
-    ////});
+
+
     var content = "{'nameid': '789','messagedata': 'test1k'}";
     let rows = null;
     try {
         rows = JSON.parse(content)
     } catch (err) {
     }
+insertRowsAsStream(datasetId,tableId,rows,projectId)
+}
+
+function insertRowsAsStream (datasetId, tableId, rows, projectId) {
+    // [START bigquery_insert_stream]
+    // Imports the Google Cloud client library
+    const BigQuery = require('@google-cloud/bigquery');
+
+
+
+    // Instantiates a client
     const bigquery = BigQuery({
         projectId: projectId
     });
+
+    // Inserts data into a table
     bigquery
-        .dataset(datasetId);
-        .table(tableId);
-        .insertrow(rows);
+        .dataset(datasetId)
+        .table(tableId)
+        .insert(rows)
+        .then((insertErrors) => {
+        console.log('Inserted:');
+    rows.forEach((row) => console.log(row));
 
-
-
+    if (insertErrors && insertErrors.length > 0) {
+        console.log('Insert errors:');
+        insertErrors.forEach((err) => console.error(err));
+    }
+})
+.catch((err) => {
+        console.error('ERROR:', err);
+});
+    // [END bigquery_insert_stream]
 }
-    ////bigquery.tables.insert({
-    ////    'projectId': projectId,
-    ////    'datasetId': datasetId,
-    ////    'tableId': tableId,
-    ////    'resource': {'kind': 'bigquery#tableDataInsertAllRequest','rows':[{'insertId': 123456, 'json': '{"nameid": "123"","messagedata":"test1"}'}]}, function (err, result) {
-    ////        if (err) {
-     ////           console.log(err);
-     ////       } else {
-     ////           console.log(result);
-      ////      }
-      ////  }})};
-//});
-
-//err: result});
-
 
 subscription.on('message', function (message) {
     console.log('event received', message);

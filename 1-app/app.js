@@ -58,12 +58,12 @@ function storeEvent(message) {
             console.log('stored in datastore', obj);
             console.log('Begin BIGQUERY:');
             var content = {"nameid": "789", "messagedata": "test1k"};
-            console.log('content:' + content);
+            //console.log('content:' + content);
             //let rows = null;
-            try {
-                var rows = JSON.parse(content)
-            } catch (err) {
-           }
+            //try {
+            //    var rows = JSON.parse(content)
+            //} catch (err) {
+           //}
         insertRowsAsStream(datasetId,tableId,rows,projectId)
         }
     );

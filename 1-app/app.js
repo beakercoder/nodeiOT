@@ -64,6 +64,7 @@ function storeEvent(message) {
     let rows = null;
     try {
         rows = JSON.parse(content)
+        console.log(JSON);
     } catch (err) {
     }
 insertRowsAsStream(datasetId,tableId,rows,projectId)

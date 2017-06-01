@@ -89,7 +89,7 @@ function insertRowsAsStream (datasetId, tableId, rows, projectId) {
         .insert(rows)
         .then((insertErrors) => {
         console.log('Inserted:');
-    rows.forEach((row) => console.log(row));
+    //rows.forEach((row) => console.log(row));
 
     if (insertErrors && insertErrors.length > 0) {
         console.log('Insert errors:');

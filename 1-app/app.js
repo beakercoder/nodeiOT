@@ -64,7 +64,6 @@ function storeEvent(message) {
                 var rows = JSON.parse(content)
             } catch (err) {
            }
-            console.log('beforeinsert');
         insertRowsAsStream(datasetId,tableId,rows,projectId)
         }
     );
@@ -77,8 +76,6 @@ function insertRowsAsStream (datasetId, tableId, rows, projectId) {
     // [START bigquery_insert_stream]
     // Imports the Google Cloud client library
     const BigQuery = require('@google-cloud/bigquery');
-   console.log('INinsert');
-
 
     // Instantiates a client
     const bigquery = BigQuery({

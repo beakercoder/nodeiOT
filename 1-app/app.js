@@ -68,7 +68,7 @@ function storeEvent(message) {
 
 function insertRowsAsStream (datasetId, tableId, rows, projectId, messagedata, publishedat, deviceid) {
      var content = {"nameid": "1658", "messagedata": " messagedata "};
-    / [START bigquery_insert_stream]
+    // [START bigquery_insert_stream]
     // Imports the Google Cloud client library
     const BigQuery = require('@google-cloud/bigquery');
 

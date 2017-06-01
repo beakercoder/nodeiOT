@@ -8,12 +8,12 @@ var express = require('express');
 
 var app = express();
 var google = require('googleapis');
-//var bigquery = google.bigquery('v2');
+
 
 app.enable('trust proxy');
 
 var Datastore = require('@google-cloud/datastore');
-//const BigQuery = require('@google-cloud/bigquery');
+
 const projectId = "doolinhomeiot";
 const datasetId = "OfficeData";
 const tableId = "iotdata";
@@ -38,10 +38,10 @@ var subscription = pubsub.subscription(process.env.PUBSUB_SUBSCRIPTION_NAME);
 function storeEvent(message) {
     var key = datastore.key('officedata');
     key.identifier = "id"
-    // You can uncomment some of the other things if you want to store them in the database
+
 
     var obj = {
-        messageid: message.id
+        messageid: message.id,
         deviceid: message.attributes.device_id,
         ////event: message.attributes.event,
         published: message.attributes.published_at,
@@ -58,12 +58,6 @@ function storeEvent(message) {
             console.log('stored in datastore', obj);
             console.log('Begin BIGQUERY:');
             var content = {"nameid": "1658", "messagedata": " message.data "};
-            //console.log('content:' + content);
-            //let rows = null;
-            //try {
-            //    var rows = JSON.parse(content)
-            //} catch (err) {
-           //}
         insertRowsAsStream(datasetId,tableId,content,projectId)
         }
     );
@@ -89,7 +83,6 @@ function insertRowsAsStream (datasetId, tableId, rows, projectId) {
         .insert(rows)
         .then((insertErrors) => {
         console.log('Inserted:');
-
     
 })
 .catch((err) => {

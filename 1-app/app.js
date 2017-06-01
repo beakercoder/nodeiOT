@@ -64,7 +64,7 @@ function storeEvent(message) {
             //    var rows = JSON.parse(content)
             //} catch (err) {
            //}
-        insertRowsAsStream(datasetId,tableId,rows,projectId)
+        insertRowsAsStream(datasetId,tableId,content,projectId)
         }
     );
 

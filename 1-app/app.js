@@ -56,18 +56,20 @@ function storeEvent(message) {
                 console.log('There was an error storing the event', err);
             }
             console.log('stored in datastore', obj);
+            console.log('Begin BIGQUERY:',
+            var content = {"nameid": "789", "messagedata": "test1k"};
+            let rows = null;
+            try {
+                rows = JSON.parse(content)
+                console.log('JSON=' + JSON);
+            } catch (err) {
+           }
+        insertRowsAsStream(datasetId,tableId,rows,projectId)
         }
     );
 
 
-    var content = {"nameid": "789", "messagedata": "test1k"};
-    let rows = null;
-    try {
-        rows = JSON.parse(content)
-        //console.log('JSON=' + JSON);
-    } catch (err) {
-    }
-insertRowsAsStream(datasetId,tableId,rows,projectId)
+
 }
 
 function insertRowsAsStream (datasetId, tableId, rows, projectId) {

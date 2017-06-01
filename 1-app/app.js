@@ -56,7 +56,7 @@ function storeEvent(message) {
                 console.log('There was an error storing the event', err);
             }
             console.log('stored in datastore', obj);
-            console.log('Begin BIGQUERY:',
+            console.log('Begin BIGQUERY:');
             var content = {"nameid": "789", "messagedata": "test1k"};
             let rows = null;
             try {

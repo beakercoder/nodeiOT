@@ -58,8 +58,11 @@ function storeEvent(message) {
             console.log('stored in datastore', obj);
             console.log('Begin BIGQUERY:');
             var content = {"nameid": "789", "messagedata": "test1k"};
+            console.log('content:' + content);
             let rows = null;
+            console.log('after let:');
             try {
+                console.log('in try:');
                 rows = JSON.parse(content)
                 console.log('JSON=' + JSON);
             } catch (err) {

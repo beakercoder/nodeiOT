@@ -69,10 +69,20 @@ function storeEvent(message) {
 
 function insertRowsAsStream (datasetId, tableId, projectId, messagedata, publishedat, deviceid) {
 
-    var builder = "deviceid:" + deviceid;
-    builder =  builder + ", messagedata:" + messagedata;
-    var content = "{" + builder + "}"; //deviceid": "1658", "messagedata": " + messagedata + "};
-    console.log(content);
+    var firstfield = "deviceid";
+var secondfield = "data";
+var iotdata = String(messagedata);
+var content = JSON.stringify(firstfield) + ": " + JSON.stringify(deviceid) + "," + JSON.stringify(secondfield) + ": " + JSON.stringify(iotdata);
+//var c2=String(content);
+console.log(content);
+var jsonrow = JSON.parse(content);	
+console.log(jsonrow);     
+//   builder = JSON.stringify(builder);
+//    console.log(builder);
+//    builder =  builder + ", messagedata:" + messagedata;
+//    var content = "{" + builder + "}"; //deviceid": "1658", "messagedata": " + messagedata + "};
+//	JSON.stringify(content);
+   // console.log(content);
     // [START bigquery_insert_stream]
     // Imports the Google Cloud client library
     const BigQuery = require('@google-cloud/bigquery');
@@ -86,7 +96,7 @@ function insertRowsAsStream (datasetId, tableId, projectId, messagedata, publish
     bigquery
         .dataset(datasetId)
         .table(tableId)
-        .insert(content)
+        .insert(jsonrow)
         .then((insertErrors) => {
         console.log('Inserted:');
 

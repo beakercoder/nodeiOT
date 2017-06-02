@@ -57,9 +57,9 @@ function storeEvent(message) {
             }
             console.log('stored in datastore', obj);
             console.log('Begin BIGQUERY:');
-            var messagedata = message.data;
+            var messagedata = obj.data;
             //var content = {"nameid": "1658", "messagedata": " message.data "};
-        insertRowsAsStream(datasetId,tableId,projectId,messagedata , message.attributes.published_at, message.attributes.device_id)
+            insertRowsAsStream(datasetId,tableId,projectId,messagedata , message.attributes.published_at, message.attributes.device_id)
         }
     );
 
@@ -68,7 +68,11 @@ function storeEvent(message) {
 }
 
 function insertRowsAsStream (datasetId, tableId, projectId, messagedata, publishedat, deviceid) {
-     var content = {"nameid": "1658", "messagedata": " messagedata "};
+
+    var builder = "deviceid:" + deviceid;
+    builder =  builder + ", messagedata:" + messagedata;
+    var content = "{" + builder + "}"; //deviceid": "1658", "messagedata": " + messagedata + "};
+    console.log(content);
     // [START bigquery_insert_stream]
     // Imports the Google Cloud client library
     const BigQuery = require('@google-cloud/bigquery');
@@ -85,7 +89,7 @@ function insertRowsAsStream (datasetId, tableId, projectId, messagedata, publish
         .insert(content)
         .then((insertErrors) => {
         console.log('Inserted:');
-    
+
 })
 .catch((err) => {
         console.error('ERROR:', err);

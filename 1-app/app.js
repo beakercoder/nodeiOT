@@ -72,11 +72,13 @@ function insertRowsAsStream (datasetId, tableId, projectId, messagedata, publish
     var firstfield = "deviceid";
 var secondfield = "data";
 var iotdata = String(messagedata);
-var content = JSON.stringify(firstfield) + ": " + JSON.stringify(deviceid) + "," + JSON.stringify(secondfield) + ": " + JSON.stringify(iotdata);
+//var content = JSON.stringify(firstfield) + ": " + JSON.stringify(deviceid) + "," + JSON.stringify(secondfield) + ": " + JSON.stringify(iotdata);
+var content = {"deviceid": "67899" , "data": "67"}
 //var c2=String(content);
 console.log(content);
-var jsonrow = JSON.parse(content);	
-console.log(jsonrow);     
+//var jsonrow={content};
+//var jsonrow = JSON.parse(content);	
+//console.log(jsonrow);     
 //   builder = JSON.stringify(builder);
 //    console.log(builder);
 //    builder =  builder + ", messagedata:" + messagedata;
@@ -96,7 +98,7 @@ console.log(jsonrow);
     bigquery
         .dataset(datasetId)
         .table(tableId)
-        .insert(jsonrow)
+        .insert(content)
         .then((insertErrors) => {
         console.log('Inserted:');
 

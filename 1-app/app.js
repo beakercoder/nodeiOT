@@ -56,9 +56,7 @@ function storeEvent(message) {
                 console.log('There was an error storing the event', err);
             }
             console.log('stored in datastore', obj);
-            console.log('Begin BIGQUERY:');
             var messagedata = obj.data;
-            //var content = {"nameid": "1658", "messagedata": " message.data "};
             insertRowsAsStream(datasetId,tableId,projectId,messagedata , message.attributes.published_at, message.attributes.device_id)
         }
     );
@@ -71,21 +69,15 @@ function insertRowsAsStream (datasetId, tableId, projectId, messagedata, publish
 
     var firstfield = "deviceid";
 var secondfield = "data";
+var thirdfield = "timestamp";
 var iotdata = String(messagedata);
-//var content = JSON.stringify(firstfield) + ": " + JSON.stringify(deviceid) + "," + JSON.stringify(secondfield) + ": " + JSON.stringify(iotdata);
-var content = {"deviceid": "67899" , "data": "67"}
-//var c2=String(content);
+var content = "{" + JSON.stringify(firstfield) + ": " + JSON.stringify(deviceid) + "," + JSON.stringify(secondfield) + ": " + JSON.stringify(iotdata) + "," + JSON.stringify(thirdfield) + ": " + JSON.stringify(publishedat) + "}";
+//var content = {"deviceid": "67899" , "data": "67"}
+var c2=String(content);
 console.log(content);
-//var jsonrow={content};
-//var jsonrow = JSON.parse(content);	
-//console.log(jsonrow);     
-//   builder = JSON.stringify(builder);
-//    console.log(builder);
-//    builder =  builder + ", messagedata:" + messagedata;
-//    var content = "{" + builder + "}"; //deviceid": "1658", "messagedata": " + messagedata + "};
-//	JSON.stringify(content);
-   // console.log(content);
-    // [START bigquery_insert_stream]
+var jsonrow={content};
+var jsonrow = JSON.parse(content);	
+console.log({jsonrow});     
     // Imports the Google Cloud client library
     const BigQuery = require('@google-cloud/bigquery');
 
@@ -93,12 +85,11 @@ console.log(content);
     const bigquery = BigQuery({
         projectId: projectId
     });
-
     // Inserts data into a table
     bigquery
         .dataset(datasetId)
         .table(tableId)
-        .insert(content)
+        .insert(jsonrow)
         .then((insertErrors) => {
         console.log('Inserted:');
 

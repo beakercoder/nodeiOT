@@ -70,14 +70,24 @@ function insertRowsAsStream (datasetId, tableId, projectId, messagedata, publish
     var firstfield = "deviceid";
 var secondfield = "data";
 var thirdfield = "timestamp";
+var fourthfield = "temperature";
+var fifthfield = "humidity";
+var temp = messagedata.split(".")
+var tempstring = temp[0].toString();
+var humstring = temp[1].toString();
+var hum = messagedata.split(",");
+var humstring = hum[1];
+humstring = humstring.substring(0,2);
+console.log("TEMP=", tempstring);
+console.log("HUM=", humstring);
 var iotdata = String(messagedata);
-var content = "{" + JSON.stringify(firstfield) + ": " + JSON.stringify(deviceid) + "," + JSON.stringify(secondfield) + ": " + JSON.stringify(iotdata) + "," + JSON.stringify(thirdfield) + ": " + JSON.stringify(publishedat) + "}";
+var content = "{" + JSON.stringify(firstfield) + ": " + JSON.stringify(deviceid) + "," + JSON.stringify(secondfield) + ": " + JSON.stringify(iotdata) + "," + JSON.stringify(thirdfield) + ": " + JSON.stringify(publishedat) + ", " ;
+content = content + JSON.stringify(fourthfield) + ": " + JSON.stringify(tempstring) + ",";
+content = content + JSON.stringify(fifthfield) + ": " + JSON.stringify(humstring) + "}";
 //var content = {"deviceid": "67899" , "data": "67"}
-var c2=String(content);
-console.log(content);
 var jsonrow={content};
 var jsonrow = JSON.parse(content);	
-console.log({jsonrow});     
+console.log("JSON=", {jsonrow});     
     // Imports the Google Cloud client library
     const BigQuery = require('@google-cloud/bigquery');
 
